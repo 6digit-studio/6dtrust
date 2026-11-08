@@ -24,7 +24,7 @@
 <div class="flex min-h-screen flex-col">
 	<header class="sticky top-0 z-30 border-b border-border/70 bg-background/80 backdrop-blur-md">
 		<nav class="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-5">
-			<a href="/" class="group flex items-center gap-2.5" aria-label="6dtrust home">
+			<a href="/" class="group flex items-center gap-2.5" aria-label="6d trust home">
 				<img
 					src={logo}
 					alt=""
@@ -82,7 +82,7 @@
 			<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
 				<div class="flex flex-col gap-1 font-micro text-xs text-muted-foreground/70">
 					<p class="uppercase tracking-[0.18em]">
-						6dtrust · attack-resistant trust as a service
+						6d trust · attack-resistant trust as a service
 					</p>
 					<p>
 						A calculator, not a judge. Trust is computed relative to <em
@@ -119,6 +119,12 @@
 					<p class="font-micro text-xs uppercase tracking-[0.18em] text-muted-foreground/70">
 						Community
 					</p>
+					<a
+						href={SOCIAL_LINKS.github.href}
+						rel="noopener noreferrer"
+						class="text-muted-foreground transition-colors hover:text-foreground"
+						>{SOCIAL_LINKS.github.label}</a
+					>
 					<a
 						href={SOCIAL_LINKS.x.href}
 						rel="noopener noreferrer"
