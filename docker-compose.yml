@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: dtrust-pg
+    environment:
+      POSTGRES_USER: dtrust
+      POSTGRES_PASSWORD: dtrust_local_dev
+      POSTGRES_DB: dtrust
+    ports:
+      - "5432:5432"
+    volumes:
+      - dtrust_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dtrust -d dtrust"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  dtrust_pgdata:

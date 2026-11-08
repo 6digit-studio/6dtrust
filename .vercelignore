@@ -1,0 +1,9 @@
+# Local-only artifacts that must never be uploaded in a deploy bundle.
+# The intro-video work lives here: ~5 GB of .mov renders, gitignored, and
+# irrelevant to the SvelteKit build. Without this, `vercel --prod` (CLI deploy)
+# tries to upload them and dies on the 2 GiB-per-file limit. Git-integration
+# deploys already skip these (untracked), so this only matters for CLI deploys.
+video/
+
+# Test output, never needed in a deploy.
+test-results/

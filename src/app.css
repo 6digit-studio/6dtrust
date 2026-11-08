@@ -1,0 +1,182 @@
+@import 'tailwindcss';
+
+/* ── 6dtrust design language ───────────────────────────────────────
+ * Type system + "Slate" dark theme lifted from the Intranquil web companion
+ * (sibling repo intranquil_web/src/routes/layout.css). We take ONLY the type
+ * roles and the recessive slate ground — the point of that theme is "chrome
+ * recedes so the data is the only colour on the page", which is exactly right
+ * for a trust calculator: the verdicts and the graph should be the only colour.
+ *
+ * Deliberately omitted: the flamboyant Violet opt-in, the DAW-specific tokens
+ * (--wave, --brand-bg gradient), and the shadcn/tw-animate layers. A trust
+ * product should never look flamboyant by default — austerity IS the brand.
+ *
+ * The display face is Fraunces — a classical high-contrast serif. A trust
+ * service trades on credibility, and a serif signals institutional gravitas
+ * (a journal, a bank, a CA) the way a geometric sans can't; its optical-sizing
+ * axis sharpens the contrast at headline sizes. Deliberately NOT Intranquil's
+ * Unbounded — the two projects are unrelated and shouldn't read as samey.
+ * Fraunces / Sora / JetBrains Mono / Inter load via <link> in app.html. */
+
+@custom-variant dark (&:is(.dark *));
+
+/* "Slate" — a lifted charcoal-slate, a whisper cold (hue ~255, very low
+   chroma). Professional and recessive. This is the only theme. */
+.dark {
+	--background: oklch(0.195 0.005 255);
+	--foreground: oklch(0.975 0.004 250);
+	--card: oklch(0.245 0.006 255);
+	--card-foreground: oklch(0.975 0.004 250);
+	--popover: oklch(0.245 0.006 255);
+	--popover-foreground: oklch(0.975 0.004 250);
+	--primary: oklch(0.93 0.004 250);
+	--primary-foreground: oklch(0.22 0.006 255);
+	--secondary: oklch(0.31 0.006 255);
+	--secondary-foreground: oklch(0.975 0.004 250);
+	--muted: oklch(0.31 0.006 255);
+	--muted-foreground: oklch(0.74 0.008 250);
+	--accent: oklch(0.345 0.008 255);
+	--accent-foreground: oklch(0.975 0.004 250);
+	--destructive: oklch(0.704 0.191 22.216);
+	--brand: oklch(0.9 0.008 250);
+	--brand-foreground: oklch(0.22 0.008 255);
+	--border: oklch(1 0 0 / 12%);
+	--input: oklch(1 0 0 / 16%);
+	--ring: oklch(0.65 0.008 250);
+
+	/* Trust levels — a single-hue intensity ramp (trust-teal, hue 165). Rank
+	   reads as brightness: more trust = brighter + greener. Pending falls back
+	   to muted chrome so absence reads as neutral, never as a scarlet letter. */
+	--level-3: oklch(0.83 0.14 165); /* trusted */
+	--level-2: oklch(0.72 0.1 165); /* vouched */
+	--level-1: oklch(0.62 0.06 165); /* known */
+	--level-0: oklch(0.6 0.008 250); /* pending */
+
+	--radius: 0.625rem;
+}
+
+@theme inline {
+	/* Four type roles: display (Fraunces) → wordmark + headlines, the classical
+	   trustworthy serif; sans/body (Sora) → prose; mono (JetBrains Mono) →
+	   tabular readouts (levels, counts, ids); micro (Inter) → small uppercase
+	   chrome (labels, units, kickers). */
+	--font-display: 'Fraunces', 'Sora', serif;
+	--font-sans: 'Sora', 'Inter', sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, monospace;
+	--font-micro: 'Inter', 'Sora', sans-serif;
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-brand: var(--brand);
+	--color-brand-foreground: var(--brand-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+
+	--color-level-3: var(--level-3);
+	--color-level-2: var(--level-2);
+	--color-level-1: var(--level-1);
+	--color-level-0: var(--level-0);
+
+	--radius-sm: calc(var(--radius) * 0.6);
+	--radius-md: calc(var(--radius) * 0.8);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) * 1.4);
+	--radius-2xl: calc(var(--radius) * 1.8);
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+		font-feature-settings: 'ss01';
+	}
+	html {
+		@apply font-sans antialiased;
+	}
+	/* Tabular figures everywhere we show a count or id. */
+	.font-mono {
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* Kill the cream/yellow Chrome autofill background — it overrides author
+	   bg on inputs (e.g. the github username field) and breaks the dark theme.
+	   Paint the field's own background back via an inset shadow and hold the
+	   text colour; the long transition defeats autofill's colour animation. */
+	input:-webkit-autofill,
+	input:-webkit-autofill:hover,
+	input:-webkit-autofill:focus,
+	input:-webkit-autofill:active {
+		-webkit-text-fill-color: var(--foreground);
+		caret-color: var(--foreground);
+		-webkit-box-shadow: 0 0 0 1000px var(--background) inset;
+		box-shadow: 0 0 0 1000px var(--background) inset;
+		transition: background-color 9999s ease-in-out 0s;
+	}
+}
+
+/* ── .copy — typography for authored prose (mdsvex output) ────────────────
+ * mdsvex emits bare HTML (h2, p, ul, a, …) with no classes. Hand-authored
+ * pages like /about style each element inline; prose posts can't. This is the
+ * one shared place that gives rendered markdown the project's type roles, so
+ * an article reads like the rest of the site without per-post styling. A post
+ * can still drop inline Svelte/SVG for /about-grade diagrams when it wants. */
+@layer components {
+	.copy {
+		@apply text-[0.95rem] leading-relaxed text-muted-foreground;
+	}
+	.copy > * + * {
+		margin-top: 1rem;
+	}
+	.copy h2 {
+		@apply mt-10 font-display text-xl font-semibold tracking-tight text-foreground;
+	}
+	.copy h3 {
+		@apply mt-8 font-display text-lg font-semibold tracking-tight text-foreground;
+	}
+	.copy a {
+		@apply text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground;
+	}
+	.copy strong {
+		@apply font-medium text-foreground;
+	}
+	.copy ul {
+		@apply list-disc pl-5;
+	}
+	.copy ol {
+		@apply list-decimal pl-5;
+	}
+	.copy li {
+		@apply mt-1.5;
+	}
+	.copy code {
+		@apply rounded bg-card px-1.5 py-0.5 font-mono text-sm text-foreground;
+	}
+	.copy pre {
+		@apply mt-4 overflow-x-auto rounded-xl border border-border bg-card/40 p-4;
+	}
+	.copy pre code {
+		@apply bg-transparent p-0;
+	}
+	.copy blockquote {
+		@apply my-5 border-l-2 border-border pl-4 text-muted-foreground italic;
+	}
+	.copy hr {
+		@apply my-8 border-border;
+	}
+}

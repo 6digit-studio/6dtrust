@@ -1,0 +1,47 @@
+---
+title: The Sybil bound
+summary: Why a million fake accounts can't buy trust — the max-flow bottleneck that makes the metric attack-resistant.
+---
+
+The defining property of 6dtrust is not that it scores people. Plenty of
+systems score people. The defining property is **what an attacker cannot do**:
+no matter how many fake identities they create, they cannot manufacture trust
+they were not given by a real edge.
+
+## Trust is a current, not a tally
+
+Most reputation systems count. More followers, more upvotes, more endorsements —
+more standing. Counting is exactly what a Sybil attacker exploits: identities are
+cheap, so anything you can accumulate by creating identities is for sale.
+
+6dtrust does not count. It solves a **max-flow** problem. Trust flows out
+from your seed identities like a current through the vouch graph. Each node is
+given a capacity that shrinks with its distance from the seeds, and every node is
+split so that being *accepted* costs one unit of flow. A node is trusted only if
+the current actually reaches it.
+
+## The bottleneck is the honest edge
+
+Here is the consequence, and it is the whole point. The number of bogus
+identities that can enter the trusted set is bounded by the capacity of the
+**real edges** leading into them — not by how many fakes exist.
+
+An attacker spins up a million accounts and vouches for each other in a dense
+mesh. It buys them nothing. If only one trusted person vouches into that cluster,
+only a trickle of trust crosses that single edge, and the millions behind it
+starve. The attacker controls the size of their cluster but not the capacity of
+the one honest edge feeding it — and that edge is the bottleneck.
+
+> The attacker can grow the cluster without limit. They cannot grow the edge.
+
+## Why this is the right shape for a trust service
+
+Because the bound depends only on honest structure, the service itself never has
+to *judge*. It holds no global opinion, maintains no blocklist, makes no call
+about who is real. It computes a flow relative to your chosen seeds and reports
+where the current reached. The attack resistance is a property of the math, not
+of a moderator — which is exactly why it can be a neutral calculator instead of
+an authority.
+
+The metric is Raph Levien's, designed for [Advogato](/about) twenty-five years
+early. Our one change is minted roots — each with its own seed set. The Sybil bound is his.

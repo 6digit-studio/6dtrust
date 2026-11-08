@@ -1,0 +1,23 @@
+{
+  "name": "6dtrust",
+  "palette": {
+    "base": "#11111b",
+    "text": "#cdd6f4",
+    "surface": "#313244",
+    "accent": "#74c7ec"
+  },
+  "background": null,
+  "sound": "C",
+  "glyph": "⬟",
+  "avatar": {
+    "mark": "./visual/mark.png",
+    "raster": {
+      "512": "./visual/mark.png",
+      "256": "./visual/mark-256.png",
+      "128": "./visual/mark-128.png",
+      "64": "./visual/mark-64.png"
+    },
+    "safe": 0.92,
+    "min": 44
+  }
+}

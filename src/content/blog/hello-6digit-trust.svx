@@ -1,0 +1,43 @@
+---
+title: Attack-resistant trust, as a service
+date: '2026-06-14'
+summary: What we're building, why we dusted off a 1998 metric, and where it's going.
+---
+
+We're building 6dtrust: an attack-resistant trust metric you can call as a
+service. This is the first note in what will be an occasional log of how it's
+built and where it's headed.
+
+## Why now
+
+The web is drowning in cheap identities. Every system that asks "is this person
+real / trustworthy / worth listening to?" by counting — followers, stars,
+endorsements — is trivially gamed, because identities cost nothing and counts are
+for sale. The honest answer needs a metric where fake accounts buy nothing. That
+metric already exists, and it's older than most of the platforms struggling
+without it.
+
+## The 1998 idea we're modernizing
+
+Raph Levien designed an attack-resistant trust metric for
+[Advogato](https://en.wikipedia.org/wiki/Advogato), the early free-software
+community site, and published the theory in *"Attack-Resistant Trust Metrics for
+Public Key Certification"* (Levien & Aiken, USENIX Security, 1998). It models
+trust as a **max-flow** problem so that the number of fakes that can sneak into
+the trusted set is bounded by honest edges, not by how many fakes exist. We wrote
+up the mechanism in [The Sybil bound](/articles/the-sybil-bound).
+
+Our one substantive change: Levien's seed was a single hard-wired global root.
+We make the seed set **per minted root**, which turns a judge into a
+[calculator](/articles/calculator-not-judge). Everything load-bearing under that
+is his, twenty-five years early.
+
+## Where it's going
+
+GitHub-first identity is live, vouches are signed edges, and trust is computed
+per-root in the background and cached for instant reads (a badge, an "is X
+trusted under root R?" lookup). Next on the walk: more identity providers and
+cross-provider account linking, so a vouch made about your GitHub also counts for
+your other identities.
+
+More as it ships.

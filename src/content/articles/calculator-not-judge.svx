@@ -1,0 +1,46 @@
+---
+title: A calculator, not a judge
+summary: Why trust is computed relative to your seeds, and why the service deliberately refuses to hold a global opinion.
+---
+
+There is no single score in 6dtrust. There is no master list of trusted
+people, no global root, no throne. This is a deliberate refusal, and it is the
+difference between a *calculator* and a *judge*.
+
+## A root is a worldview, not a ranking
+
+A **root** is a set of seed identities you take as trusted-by-definition — the
+axioms of your worldview. Trust is computed *relative to that root*. Pick
+different seeds and the same graph yields different verdicts: a person can be
+trusted from one root and pending from another, and both answers are correct,
+because they are answers to different questions.
+
+This is not a hedge or an unfinished feature. It is the design. A trust metric
+that hands down one universal verdict is making a political claim about whose
+judgment is canonical. By computing relative to *your* seeds, the service makes
+no such claim. It does not know who is trustworthy in the abstract — that
+question has no answer — only who is reachable from the seeds you named.
+
+## The service is an index, not an authority
+
+Every vouch is signed by the voucher's key, so it is self-authenticating: anyone
+can verify it without trusting whoever runs the service. The aggregator is an
+index, not an authority. It cannot forge an edge, and it cannot silently drop
+one. If it did, the signatures would not check out.
+
+That property is what lets the service stay neutral under pressure. There is no
+lever to pull to declare someone trusted or untrusted globally, because no global
+verdict exists to manipulate. The most the operator can do is compute a flow you
+could have computed yourself from the same public, signed edges.
+
+## What this means in practice
+
+- **No appeals to the platform.** Being "untrusted" is not a punishment handed
+  down — it means the current from *a particular root* did not reach you. From a
+  different root it might.
+- **Forking is free.** Disagree with a community's seeds? Choose your own. The
+  graph is shared; the worldview is yours.
+- **The operator holds no power they could be coerced into abusing**, because the
+  verdict is a function of public data and your seeds, not of their say-so.
+
+A judge decides. A calculator computes. This is the second thing.
